@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pisgah App — Academic Planning Platform</title>
+  <meta name="description" content="Plan semesters, track GPA/CGPA, generate Academic Summary Reports, and forecast graduation outcomes." />
+  <meta name="theme-color" content="#060913" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="./index.html" aria-label="Pisgah home">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div>
+          <h1>PISGAH</h1>
+          <small>Chart Your Path to Success</small>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="App actions">
+        <a class="pill" href="./index.html">Home</a>
+        <a class="pill" href="#planner">Planner</a>
+        <a class="pill" href="#reports">Reports</a>
+        <a class="pill" href="#upgrade" id="upgradePill">Upgrade</a>
+        <button class="btn ghost" id="logoutBtn" style="display:none">Logout</button>
+        <button class="btn primary" id="loginBtn">Login</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-wrap">
+    <div class="container">
+      <div class="app-grid">
+        <!-- LEFT PANEL -->
+        <aside class="panel" id="authPanel">
+          <h3>Account</h3>
+          <p class="small">Sign in to sync across devices and unlock Pro features.</p>
+
+          <div id="authState" class="notice" style="display:none"></div>
+
+          <div id="authForms">
+            <div class="row" id="signup">
+              <div>
+                <label class="label" for="fullName">Full name</label>
+                <input class="input" id="fullName" placeholder="e.g., Adaeze Okafor" autocomplete="name" />
+              </div>
+              <div>
+                <label class="label" for="email">Email</label>
+                <input class="input" id="email" placeholder="you@email.com" autocomplete="email" />
+              </div>
+            </div>
+
+            <div style="margin-top:10px">
+              <label class="label" for="password">Password</label>
+              <input class="input" id="password" type="password" placeholder="Minimum 6 characters" autocomplete="current-password" />
+            </div>
+
+            <div class="inline" style="margin-top:12px">
+              <button class="btn primary" id="registerBtn">Create account</button>
+              <button class="btn ghost" id="loginSubmitBtn">Login</button>
+            </div>
+
+            <p class="small" style="margin-top:10px">
+              By using Pisgah you agree to use reports for planning/advisory purposes only.
+            </p>
+          </div>
+
+          <hr class="sep"/>
+
+          <h3>Academic Profile</h3>
+          <div>
+            <label class="label" for="studentName">Student name (for reports)</label>
+            <input class="input" id="studentName" placeholder="Student name" />
+          </div>
+
+          <div class="row" style="margin-top:10px">
+            <div>
+              <label class="label" for="institution">Institution</label>
+              <input class="input" id="institution" placeholder="e.g., UNN" />
+            </div>
+            <div>
+              <label class="label" for="department">Department</label>
+              <input class="input" id="department" placeholder="e.g., Accounting" />
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:10px">
+            <div>
+              <label class="label" for="level">Level</label>
+              <select id="level" class="input">
+                <option>100L</option><option>200L</option><option>300L</option><option>400L</option><option>500L</option><option>Postgraduate</option>
+              </select>
+            </div>
+            <div>
+              <label class="label" for="scale">Grading system</label>
+              <select id="scale" class="input">
+                <option value="5">5.0 scale</option>
+                <option value="4">4.0 scale</option>
+              </select>
+            </div>
+          </div>
+
+          <hr class="sep"/>
+
+          <h3 id="upgrade">Pisgah Pro</h3>
+          <div class="notice">
+            <div class="inline" style="justify-content:space-between">
+              <strong>Status:</strong>
+              <span id="planBadge" class="badge">Free</span>
+            </div>
+            <p class="small" style="margin:10px 0 0">
+              Pro unlocks Outcome Forecast, unlimited semesters, and cloud sync.
+            </p>
+          </div>
+
+          <div class="inline" style="margin-top:12px">
+            <button class="btn primary" id="payBtn">Upgrade with Paystack</button>
+            <button class="btn ghost" id="restoreBtn">Restore Pro</button>
+          </div>
+
+          <p class="small" style="margin-top:10px">
+            Price: <strong>₦2,500 per semester</strong>. Secure payment via Paystack.
+          </p>
+
+          <p class="small">
+            <span class="muted">Backend required for verification.</span>
+            See README for setup.
+          </p>
+        </aside>
+
+        <!-- RIGHT PANEL -->
+        <section class="panel" id="planner">
+          <div class="inline" style="justify-content:space-between">
+            <div>
+              <h3 style="margin:0">Performance Tracker</h3>
+              <div class="small muted">Plan semesters • Track outcomes • Export reports</div>
+            </div>
+            <div class="inline">
+              <button class="btn ghost" id="newSemesterBtn">New semester</button>
+              <button class="btn" id="saveSemesterBtn">Save semester</button>
+              <button class="btn primary" id="downloadPdfBtn">Download Academic Summary (PDF)</button>
+            </div>
+          </div>
+
+          <hr class="sep"/>
+
+          <div class="row" aria-label="semester metadata">
+            <div>
+              <label class="label" for="semesterName">Semester label</label>
+              <input class="input" id="semesterName" placeholder="e.g., 200L Harmattan (2025/2026)" />
+            </div>
+            <div>
+              <label class="label" for="matric">Matric number (optional)</label>
+              <input class="input" id="matric" placeholder="e.g., ACC/2021/1234" />
+            </div>
+          </div>
+
+          <hr class="sep"/>
+
+          <div class="row3">
+            <div>
+              <label class="label" for="course">Course title/code</label>
+              <input class="input" id="course" placeholder="e.g., ACC 201 / Financial Accounting II" />
+            </div>
+            <div>
+              <label class="label" for="units">Units</label>
+              <input class="input" id="units" type="number" min="0" step="1" placeholder="e.g., 3" />
+            </div>
+            <div>
+              <label class="label" for="grade">Grade</label>
+              <select class="input" id="grade">
+                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="inline" style="margin-top:10px">
+            <button class="btn primary" id="addCourseBtn">Add to plan</button>
+            <button class="btn ghost" id="clearCoursesBtn">Clear</button>
+            <span class="small muted" id="validationHint"></span>
+          </div>
+
+          <hr class="sep"/>
+
+          <div class="inline" style="justify-content:space-between;margin-bottom:10px" id="reports">
+            <div class="inline">
+              <span class="badge">Semester Outcome</span>
+              <span class="badge">GPA: <strong id="gpa">0.00</strong></span>
+              <span class="badge">Units: <strong id="totalUnits">0</strong></span>
+              <span class="badge">Classification: <strong id="classify">—</strong></span>
+            </div>
+            <div class="inline">
+              <span class="badge">Cumulative Standing (CGPA): <strong id="cgpa">0.00</strong></span>
+            </div>
+          </div>
+
+          <table class="table" aria-label="Courses table">
+            <thead>
+              <tr>
+                <th>Course</th>
+                <th>Units</th>
+                <th>Grade</th>
+                <th>GP</th>
+                <th>Quality Pts</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="coursesBody"></tbody>
+          </table>
+
+          <hr class="sep"/>
+
+          <div class="card" style="padding:14px">
+            <h4 style="margin:0 0 6px">Outcome Forecast <span class="badge" style="margin-left:8px" id="proTag">Pro</span></h4>
+            <p class="small" style="margin:0 0 10px">
+              Set your target class and Pisgah will estimate the minimum CGPA you need. (Forecast requires Pro.)
+            </p>
+
+            <div class="row">
+              <div>
+                <label class="label" for="targetClass">Target</label>
+                <select id="targetClass" class="input">
+                  <option value="first">First Class</option>
+                  <option value="21">Second Class Upper (2:1)</option>
+                  <option value="22">Second Class Lower (2:2)</option>
+                  <option value="third">Third Class</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Result</label>
+                <div class="notice" id="forecastBox" style="margin:0">
+                  <strong id="forecastText">Upgrade to Pro to use forecasting.</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="small" style="margin-top:12px">
+            <strong>Disclaimer:</strong> Academic Summary Reports are unofficial and for planning/advisory purposes only.
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Paystack Inline -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script src="./assets/js/config.js"></script>
+  <script src="./assets/js/auth.js"></script>
+  <script src="./assets/js/paystack.js"></script>
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>
